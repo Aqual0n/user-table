@@ -1,0 +1,106 @@
+@import '../../../../node_modules/susy/sass/susy';
+$susy: ('columns': susy-repeat(8), 'gutters': 0, 'spread': 'narrow', 'container-spread': 'narrow', );
+
+//fonts
+$familyReg: 'reg', -apple-system, system-ui, blinkmacsystemfont, 'Lucida Grande', 'Lucida Sans Unicode', 'sans-serif';
+$familyBold: 'bold', -apple-system, system-ui, blinkmacsystemfont, 'Lucida Grande', 'Lucida Sans Unicode', 'sans-serif';
+
+//colors
+$black: #000;
+$white: #fff;
+
+//fonts
+$icon: icon, sans-serif;
+
+//breakpoints
+$tablet: 650px;
+$maxMobile: $tablet - 1px;
+$tabletLate: 768px;
+$maxMobileLate: $tabletLate - 1px;
+$desktop: 1200px;
+$maxTablet: $desktop - 1px;
+$maxRems: 1600px;
+
+@function toRem($size) {
+    $remSize: $size / 12 + rem;
+
+    @return #{$remSize};
+}
+$levels: (
+    black:     (toRem(4),toRem(4), toRem(4)),
+    greendark: (toRem(8),toRem(8), toRem(8)),
+    blue:      (toRem(12),toRem(12), toRem(12)),
+    greenlight:(toRem(16),toRem(16), toRem(16)),
+    yellow:    (toRem(24),toRem(24), toRem(24)),
+    orange:    (toRem(32),toRem(32), toRem(32)),
+    red:       (toRem(32),toRem(40), toRem(48)),
+    purple:    (toRem(48),toRem(64), toRem(80)),
+    pink:      (toRem(80),toRem(96), toRem(112)),
+);
+
+@mixin marginLevel($direction,$color) {
+    @each $levelColor, $pixels in $levels {
+        @if $levelColor == $color {
+            @media (max-width: $maxMobile) {
+                margin-#{$direction}: nth(map-get($levels, $levelColor), 1);
+            }
+
+            @media (min-width: $tablet) and (max-width: $maxTablet) {
+                margin-#{$direction}: nth(map-get($levels, $levelColor), 2);
+            }
+
+            @media (min-width: $desktop) {
+                margin-#{$direction}: nth(map-get($levels, $levelColor), 3);
+            }
+        }
+    }
+}
+
+@mixin paddingLevel($direction,$color) {
+    @each $levelColor, $pixels in $levels {
+        @if $levelColor == $color {
+            @media (max-width: $maxMobile) {
+                padding-#{$direction}: nth(map-get($levels, $levelColor), 1);
+            }
+
+            @media (min-width: $tablet) and (max-width: $maxTablet) {
+                padding-#{$direction}: nth(map-get($levels, $levelColor), 2);
+            }
+
+            @media (min-width: $desktop) {
+                padding-#{$direction}: nth(map-get($levels, $levelColor), 3);
+            }
+        }
+    }
+}
+
+$tags: (
+    h1 :           (toRem(24), toRem(32), toRem(40), (toRem(28), toRem(42), toRem(52))),
+    h2 :           (toRem(22), toRem(28), toRem(32), (toRem(28), toRem(36), toRem(42))),
+    h3 :           (toRem(18), toRem(20), toRem(20), (toRem(24), toRem(26), toRem(26))),
+    p1 :           (toRem(16), toRem(20), toRem(20), (toRem(22), toRem(28), toRem(28))),
+    p2 :           (toRem(16), toRem(16), toRem(16), (toRem(22), toRem(22), toRem(22))),
+    p3 :           (toRem(14), toRem(14), toRem(14), (toRem(20), toRem(20), toRem(20))),
+    p4 :           (toRem(12), toRem(12), toRem(12), (toRem(16), toRem(16), toRem(16))),
+);
+
+@mixin fontSize($name) {
+    @each $tagName, $tagValue in $tags {
+        @if $tagName == $name {
+            @media (max-width: $maxMobile) {
+                font-size: nth(map-get($tags, $tagName), 1);
+                line-height: nth(nth(map-get($tags, $tagName), 4), 1);
+            }
+
+            @media (min-width: $tablet) and (max-width: $maxTablet) {
+                font-size: nth(map-get($tags, $tagName), 2);
+                line-height: nth(nth(map-get($tags, $tagName), 4), 2);
+            }
+
+            @media (min-width: $desktop) {
+                font-size: nth(map-get($tags, $tagName), 3);
+                line-height: nth(nth(map-get($tags, $tagName), 4), 3);
+            }
+        }
+    }
+}

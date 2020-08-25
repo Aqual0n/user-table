@@ -1,0 +1,262 @@
+.text {
+    &--padding {
+        @include paddingLevel(top, pink);
+    }
+
+    h2,
+    .h2 {
+        font-family: $familyBold;
+
+        @include fontSize(h2);
+        @include marginLevel(bottom, red);
+
+        color: $grayBlueDarker;
+    }
+
+    ul {
+        &.col-row-image {
+            white-space: nowrap;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            margin: 0 -7%;
+
+            @include marginLevel(bottom, pink);
+
+            padding: 0 7%;
+
+            li {
+                white-space: normal;
+                display: inline-block;
+                vertical-align: top;
+                width: toRem(260);
+
+                @include marginLevel(bottom, orange);
+
+                & + li {
+                    margin-left: toRem(16);
+                }
+
+                img {
+                    display: block;
+                    width: toRem(120);
+                    height: toRem(120);
+
+                    @include marginLevel(bottom, yellow);
+                }
+
+                p {
+                    font-family: $familyBold;
+
+                    @include fontSize(h3);
+                    @include marginLevel(bottom, greenlight);
+                }
+
+                span {
+                    display: block;
+
+                    @include fontSize(p3);
+
+                    color: $grayBlueDark;
+                }
+            }
+        }
+
+        &.col-row-grid-image {
+            white-space: nowrap;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            margin: 0 -7%;
+
+            @include marginLevel(bottom, purple);
+            @include marginLevel(top, purple);
+
+            padding: 0 7%;
+
+            li {
+                white-space: normal;
+                display: inline-block;
+                vertical-align: top;
+                width: toRem(260);
+
+                @include marginLevel(bottom, red);
+
+                & + li {
+                    margin-left: toRem(16);
+                }
+
+                img {
+                    display: block;
+                    width: toRem(80);
+                    height: toRem(80);
+
+                    @include marginLevel(bottom, greenLight);
+                }
+
+                p {
+                    font-family: $familyBold;
+                    color: $grayBlueDarker;
+
+                    @include fontSize(h3);
+                    @include marginLevel(bottom, greenlight);
+                }
+
+                span {
+                    display: block;
+
+                    @include fontSize(p3);
+
+                    color: $grayBlueDark;
+                }
+            }
+        }
+
+        &.row-line {
+            @include marginLevel(bottom, purple);
+
+            white-space: nowrap;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            margin: 0 -7%;
+            padding: 0 7%;
+
+            li {
+                position: relative;
+                white-space: normal;
+                display: inline-block;
+                vertical-align: top;
+                width: toRem(260);
+
+                @include paddingLevel(bottom, orange);
+                @include paddingLevel(top, greenlight);
+                @include fontSize(p3);
+
+                color: $grayBlueDark;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background-color: rgba($grayBlueLight, 0.75);
+                }
+
+                & + li {
+                    margin-left: toRem(16);
+                }
+            }
+        }
+    }
+
+    @media (min-width: $tablet) {
+        h2,
+        .h2 {
+            max-width: toRem(480);
+        }
+
+        ul {
+            &.col-row-image {
+                white-space: normal;
+                overflow: auto;
+                margin-left: 0;
+                margin-right: 0;
+                padding: 0;
+
+                li {
+                    min-height: toRem(154);
+                    position: relative;
+                    width: 100%;
+                    padding-left: toRem(168);
+                    box-sizing: border-box;
+
+                    & + li {
+                        margin-left: 0;
+                    }
+
+                    img {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                    }
+
+                    p,
+                    span {
+                        max-width: toRem(568);
+                    }
+                }
+            }
+
+            &.col-row-grid-image {
+                li {
+                    width: toRem(464);
+
+                    & + li {
+                        margin-left: toRem(32);
+                    }
+                }
+            }
+
+            &.row-line {
+                li {
+                    width: toRem(464);
+
+                    & + li {
+                        margin-left: toRem(32);
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: $desktop) {
+        ul {
+            &.col-row-image {
+                li {
+                    padding-left: toRem(152);
+                }
+            }
+
+            &.col-row-grid-image {
+                white-space: normal;
+                overflow: auto;
+                margin-left: 0;
+                margin-right: toRem(-32);
+                padding: 0;
+
+                li {
+                    min-height: toRem(214);
+                    width: calc(50% - 2.667rem);
+                    margin-right: toRem(32);
+
+                    & + li {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            &.row-line {
+                white-space: normal;
+                overflow: auto;
+                margin-left: 0;
+                margin-right: 0;
+                padding: 0;
+
+                li {
+                    width: 33.333%;
+                    box-sizing: border-box;
+                    padding-right: toRem(32);
+
+                    &::before {
+                        width: auto;
+                        right: toRem(32);
+                    }
+
+                    & + li {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+    }
+}
