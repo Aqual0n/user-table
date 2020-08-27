@@ -1,0 +1,42 @@
+.pagination {
+    padding: toRem(8);
+
+    &__column {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &__button {
+        font-size: toRem(16);
+        line-height: toRem(24);
+        padding: toRem(4) toRem(8);
+        border-radius: toRem(6);
+        background-color: $blueDark;
+        color: $white;
+
+        &.active {
+            background-color: $redDark;
+        }
+
+        &.disabled {
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        & + & {
+            margin-left: toRem(4);
+        }
+
+        &--first {
+            margin-right: toRem(12);
+
+            & + .pagination__button {
+                margin-left: 0;
+            }
+        }
+
+        & + &--last {
+            margin-left: toRem(12);
+        }
+    }
+}

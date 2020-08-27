@@ -14,7 +14,9 @@
                 ) {{typeof data === 'object' ? stringifyObject(data) : data}}
 
         +e.PAGINATION-COMPONENT.pagination(
-            :amount="content.length/20"
+            :amount="paginationAmount"
+            :position="paginationPosition"
+            @paginationChange="changeCurrentPage"
         )
 </template>
 
@@ -29,10 +31,11 @@ export default {
         }
     },
     data: ()=> ({
-        position: 0
+        position: 0,
+        rowsPerView: 10
     }),
     methods: {
-        stringifyObject(object) {
+        stringifyObject (object) {
             let objectString = '';
 
             for(let key in object) {
@@ -42,6 +45,9 @@ export default {
             }
 
             return objectString.substring(0, objectString.length - 2);
+        },
+        changeCurrentPage (index) {
+            this.position = index * this.rowsPerView;
         }
     },
     computed: {
@@ -54,12 +60,18 @@ export default {
         getOutput () {
             let output = [];
 
-            for(let i = this.position; i < this.position + 20; i++) {
+            for(let i = this.position; i < this.position + this.rowsPerView; i++) {
                 output.push(this.content[i]);
             }
 
             return output
-        }
+        },
+        paginationPosition() {
+            return parseInt(((this.position)/this.rowsPerView).toString().split('.')[0], 10)
+        },
+        paginationAmount() {
+            return this.content.length/this.rowsPerView
+        },
     },
     components: {
         'pagination-component': Pagination

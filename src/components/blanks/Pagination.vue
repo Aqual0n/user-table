@@ -1,20 +1,27 @@
 <template lang="pug">
     include ../../../tools/mixins.pug
     +b.pagination
-        +e.left
-            +e.BUTTON.button <<
-            +e.BUTTON.button <
-            +e.BUTTON.button(
-                v-for="index in paginationAmount"
-            ) {{index}}
-        +e.right(
-            v-if="amount > 6"
-        )
-            +e.BUTTON.button >
-            +e.BUTTON.button >>
-            +e.BUTTON.button(
-                v-for="index in paginationEnding"
-            ) {{index}}
+        +e.BUTTON.button(
+            :class="{'disabled': position === 0}"
+            v-on:click="setCurrentPage(position-1)"
+        ) <
+        +e.BUTTON.button--first(
+            v-if="position > 0"
+            v-on:click="setCurrentPage(0)"
+        ) 1
+        +e.BUTTON.button(
+            v-for="index in paginationAmount"
+            :class="{'active': index === position + 1}"
+            v-on:click="setCurrentPage(index - 1)"
+        ) {{index}}
+        +e.BUTTON.button--last(
+            v-if="position < amount - 3"
+            v-on:click="setCurrentPage(amount - 1)"
+        ) {{amount}}
+        +e.BUTTON.button(
+            :class="{'disabled': position + 1 === amount}"
+            v-on:click="setCurrentPage(position + 1)"
+        ) >
 </template>
 
 <script>
@@ -24,23 +31,44 @@ export default {
             type: Number,
             required: true
         },
-        active: {
+        position: {
             type: Number,
             required: true
         }
     },
+    methods: {
+        setCurrentPage(index) {
+            this.$emit('paginationChange', index);
+        }
+    },
     computed: {
         paginationAmount () {
-            if (this.amount < 3) {
+            if (this.amount < 6) {
                 return this.amount;
             }
-            return 3
-        },
-        // https://github.com/vuejs/vue/issues/3641
-        paginationEnding () {
+
             let arr = [];
 
-            for (let i = this.amount - 2; i <= this.amount; i++) {
+            let pos = this.position + 1;
+
+            let deltaPrev = 2;
+            let deltaNext = 2;
+
+            if (pos - 3 <= 0) {
+                deltaNext += deltaPrev;
+                if (pos - 3 !== 0) {
+                    deltaPrev = 0;
+                } else {
+                    deltaPrev = 1;
+                }
+            } else if (pos + 3 > this.amount) {
+                deltaPrev += deltaNext;
+                deltaNext = this.amount - pos;
+                deltaPrev -= deltaNext;
+            }
+
+            // https://github.com/vuejs/vue/issues/3641
+            for (let i = pos - deltaPrev; i <= pos + deltaNext; i++) {
                 arr.push(i);
             }
 

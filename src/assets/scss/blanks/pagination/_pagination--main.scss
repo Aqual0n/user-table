@@ -1,0 +1,12 @@
+.pagination {
+    @media (min-width: $desktop) {
+        &__button {
+            transition: .3s ease;
+            transition-property: opacity;
+
+            &:hover {
+                opacity: .7;
+            }
+        }
+    }
+}
