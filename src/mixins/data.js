@@ -3,7 +3,7 @@ export default {
     data: () => ({
         content: [],
         // url: 'http://www.filltext.com/?rows=1000&id={index}&fullname={firstName}~{lastName}&company={business}&email={email}&uname={username}&address={addressObject}'
-        url: 'https://jsonplaceholder.typicode.com/comments'
+        url: 'https://jsonplaceholder.typicode.com/users'
     }),
     methods: {
         fetchData() {

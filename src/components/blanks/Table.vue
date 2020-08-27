@@ -23,6 +23,14 @@
 <script>
 import Pagination from "./Pagination.vue";
 
+/* todo:
+    - field for inputing the amount of items per page
+    - sort
+    - search
+    - popup
+    - add states (error, load)
+*/
+
 export default {
     props: {
         content: {
@@ -32,7 +40,7 @@ export default {
     },
     data: ()=> ({
         position: 0,
-        rowsPerView: 10
+        rowsPerView: 25
     }),
     methods: {
         stringifyObject (object) {
@@ -70,7 +78,7 @@ export default {
             return parseInt(((this.position)/this.rowsPerView).toString().split('.')[0], 10)
         },
         paginationAmount() {
-            return this.content.length/this.rowsPerView
+            return Math.ceil(this.content.length/this.rowsPerView)
         },
     },
     components: {

@@ -6,7 +6,7 @@
             v-on:click="setCurrentPage(position-1)"
         ) <
         +e.BUTTON.button--first(
-            v-if="position > 0"
+            v-if="amount > 5 && position > 0"
             v-on:click="setCurrentPage(0)"
         ) 1
         +e.BUTTON.button(
@@ -15,7 +15,7 @@
             v-on:click="setCurrentPage(index - 1)"
         ) {{index}}
         +e.BUTTON.button--last(
-            v-if="position < amount - 3"
+            v-if="amount > 5 && position < amount - 3"
             v-on:click="setCurrentPage(amount - 1)"
         ) {{amount}}
         +e.BUTTON.button(
