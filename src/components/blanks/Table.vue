@@ -1,23 +1,50 @@
 <template lang="pug">
     include ../../../tools/mixins.pug
-    +b.table
-        table
-            tr
-                th(
-                    v-for="(header, index) in getTableHeaders"
-                ) {{header}}
-            tr(
-                v-for="(row, index) in getOutput"
-            )
-                td(
-                    v-for="data in row"
-                ) {{typeof data === 'object' ? stringifyObject(data) : data}}
-
-        +e.PAGINATION-COMPONENT.pagination(
-            :amount="paginationAmount"
-            :position="paginationPosition"
-            @paginationChange="changeCurrentPage"
+    +b.table(
+        :class="{'loading': loading, 'empty': !this.content.length}"
+        :style="{height: tableHeight}"
+    )
+        +e.wrapper(
+            ref="wrapper"
         )
+            table(
+                :class="{'loaded': this.content.length}"
+            )
+                tr
+                    th(
+                        v-for="(header, index) in getTableHeaders"
+                    ) {{header}}
+                tr(
+                    v-for="(row, index) in getOutput"
+                )
+                    td(
+                        v-for="data in row"
+                    ) {{typeof data === 'object' ? stringifyObject(data) : data}}
+
+
+            +e.PAGINATION-COMPONENT.pagination(
+                v-if="this.content.length"
+                :amount="paginationAmount"
+                :position="paginationPosition"
+                @paginationChange="changeCurrentPage"
+            )
+
+        +e.placeholder(
+            v-if="!this.content.length"
+        ) Нажмите на кнопку "загрузить" чтобы загрузить данные
+
+        +e.preloader(
+            :class="{'active': loading}"
+        )
+            .lds-roller
+                div
+                div
+                div
+                div
+                div
+                div
+                div
+                div
 </template>
 
 <script>
@@ -36,11 +63,16 @@ export default {
         content: {
             type: Array,
             required: true
+        },
+        loading: {
+            type: Boolean,
+            required: false
         }
     },
     data: ()=> ({
         position: 0,
-        rowsPerView: 25
+        rowsPerView: 25,
+        tableHeight: null
     }),
     methods: {
         stringifyObject (object) {
@@ -56,6 +88,9 @@ export default {
         },
         changeCurrentPage (index) {
             this.position = index * this.rowsPerView;
+        },
+        setTableHeight() {
+            this.tableHeight = `${this.$refs.wrapper.getBoundingClientRect().height}px`
         }
     },
     computed: {
@@ -83,21 +118,15 @@ export default {
     },
     components: {
         'pagination-component': Pagination
+    },
+    watch: {
+        content(val) {
+            if(val.length) {
+                this.$nextTick(() => {
+                    this.setTableHeight()
+                })
+            }
+        }
     }
 }
 </script>
-
-<style lang="scss" scoped>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    tr:hover {background-color:#f5f5f5;}
-</style>

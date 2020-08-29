@@ -1,0 +1,15 @@
+.main {
+    padding: toRem(48) 0;
+
+    text-align: center;
+
+    &__title {
+        font-size: toRem(32);
+        line-height: toRem(48);
+        margin-bottom: toRem(16);
+    }
+
+    &__table {
+        margin-top: toRem(16);
+    }
+}

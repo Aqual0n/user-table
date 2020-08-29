@@ -3,6 +3,8 @@
     div
         main-component(
             :content="content"
+            :loading="loading"
+            @fetchData="fetchData"
         )
 </template>
 
@@ -13,11 +15,6 @@ export default {
     mixins: [
         data
     ],
-    mounted() {
-        this.$nextTick(() => {
-            this.fetchData()
-        })
-    },
     components: {
         'main-component': Main
     }

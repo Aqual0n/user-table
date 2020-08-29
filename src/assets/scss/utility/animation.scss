@@ -1,0 +1,18 @@
+.info-enter-active, .info-leave-active {
+    transition: .5s ease;
+    transition-property: height, opacity;
+}
+.info-enter, .info-leave-to /* .info-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+}
+
+.info-leave-active {
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.info-leave-to {
+    transition: all 0.3s ease;
+    transition-delay: 0.3s;
+    height: 0!important;
+}
