@@ -18,6 +18,7 @@
             +e.TABLE-COMPONENT.table(
                 :loading="loading"
                 :content="content"
+                @openPopup="$emit('openPopup', $event)"
             )
 </template>
 

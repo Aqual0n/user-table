@@ -13,14 +13,15 @@
                 tr
                     th(
                         v-for="(header, index) in getTableHeaders"
+                        v-on:click="sort(header)"
                     ) {{header}}
                 tr(
                     v-for="(row, index) in getOutput"
+                    v-on:click="$emit('openPopup', row)"
                 )
                     td(
                         v-for="data in row"
                     ) {{typeof data === 'object' ? stringifyObject(data) : data}}
-
 
             +e.PAGINATION-COMPONENT.pagination(
                 v-if="this.content.length"
@@ -49,13 +50,12 @@
 
 <script>
 import Pagination from "./Pagination.vue";
-
+import Search from "./Search.vue";
 /* todo:
     - field for inputing the amount of items per page
     - sort
     - search
-    - popup
-    - add states (error, load)
+    - add states (error)
 */
 
 export default {
@@ -71,10 +71,19 @@ export default {
     },
     data: ()=> ({
         position: 0,
-        rowsPerView: 25,
-        tableHeight: null
+        rowsPerView: 20,
+        tableHeight: null,
+        sortByIncrease: false,
+        sortKey: ''
     }),
     methods: {
+        sort(key) {
+            if (this.sortKey === key) {
+                this.sortByIncrease = !this.sortByIncrease;
+            } else {
+                this.sortKey = key
+            }
+        },
         stringifyObject (object) {
             let objectString = '';
 
@@ -109,6 +118,9 @@ export default {
 
             return output
         },
+        sortedContent () {
+            return []
+        },
         paginationPosition() {
             return parseInt(((this.position)/this.rowsPerView).toString().split('.')[0], 10)
         },
@@ -117,7 +129,8 @@ export default {
         },
     },
     components: {
-        'pagination-component': Pagination
+        'pagination-component': Pagination,
+        'search-component': Search
     },
     watch: {
         content(val) {
