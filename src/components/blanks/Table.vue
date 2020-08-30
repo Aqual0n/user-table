@@ -69,12 +69,6 @@
 import Pagination from "./Pagination.vue";
 import Input from "./Input.vue";
 
-/* todo:
-    - field for inputing the amount of items per page
-    - sort
-    - search
-*/
-
 export default {
     props: {
         content: {

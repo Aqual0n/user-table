@@ -1,0 +1,11 @@
+.button {
+    @media (min-width: $desktop) {
+        &--default {
+            transition: .3s ease;
+            transition-property: opacity;
+            &:hover {
+                opacity: .7;
+            }
+        }
+    }
+}
