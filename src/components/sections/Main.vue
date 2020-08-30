@@ -12,8 +12,13 @@
                     ref="wrapper"
                     :style="{height: textHeight}"
                 )
+                    h3 Введите запрос в поле ниже:
+                    +e.INPUT-COMPONENT.input(
+                        v-model="url"
+                        :placeholder="'Введите url запроса'"
+                    )
                     +e.BUTTON.button.button--default(
-                        v-on:click="$emit('fetchData')"
+                        v-on:click="$emit('fetchData', url)"
                     ) Загрузить
             +e.TABLE-COMPONENT.table(
                 :content="content"
@@ -26,9 +31,7 @@
 
 <script>
 import Table from "../blanks/Table.vue";
-/* todo:
-    - field for inputing the url
-*/
+import Input from "../blanks/Input.vue";
 export default {
     props: {
         content: {
@@ -49,7 +52,8 @@ export default {
         }
     },
     data: () => ({
-        textHeight: null
+        textHeight: null,
+        url: 'http://www.filltext.com/?rows=1000&id={index}&fullname={firstName}~{lastName}&company={business}&email={email}&uname={username}&address={addressObject}'
     }),
     mounted() {
         this.$nextTick(() => {
@@ -62,7 +66,8 @@ export default {
         }
     },
     components: {
-        'table-component': Table
+        'table-component': Table,
+        'input-component': Input
     }
 }
 </script>

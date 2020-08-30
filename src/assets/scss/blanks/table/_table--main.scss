@@ -24,6 +24,7 @@
 
     th, td {
         padding: toRem(8);
+        min-width: toRem(48);
         text-align: left;
         border-bottom: 1px solid $grayBlueMedium;
     }

@@ -5,21 +5,28 @@ export default {
         error: false,
         errorText: '',
         content: [],
-        url: 'http://www.filltext.com/?rows=1000&id={index}&fullname={firstName}~{lastName}&company={business}&email={email}&uname={username}&address={addressObject}'
+        // url: 'http://www.filltext.com/?rows=1000&id={index}&fullname={firstName}~{lastName}&company={business}&email={email}&uname={username}&address={addressObject}'
         // url: 'https://jsonplaceholder.typicode.com/users'
     }),
     methods: {
-        fetchData() {
+        fetchData(url) {
             this.loading = true;
             axios({
                 method: 'get',
-                url: this.url
+                url: url
             })
                 .then((response) => {
-                    this.content = response.data;
-                    setTimeout(() => {
+                    if (Array.isArray(response.data) ) {
+                        this.content = response.data;
+                        setTimeout(() => {
+                            this.loading = false;
+                            this.error = false;
+                        }, 300)
+                    } else {
                         this.loading = false
-                    }, 300)
+                        this.error = true
+                        this.errorText = 'Неправильный формат данных'
+                    }
                 }).catch((error) => {
                     this.loading = false
                     this.error = true

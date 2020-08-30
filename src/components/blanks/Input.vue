@@ -42,6 +42,11 @@ export default {
             }
         }
     },
+    mounted() {
+        if(this.value !== '') {
+            this.focus = true
+        }
+    },
     watch: {
         value (newVal) {
             if (newVal === '' && this.$refs.inputValue !== document.activeElement) {
