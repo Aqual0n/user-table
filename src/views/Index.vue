@@ -4,6 +4,8 @@
         main-component(
             :content="content"
             :loading="loading"
+            :error="error"
+            :errorText="errorText"
             @fetchData="fetchData"
             @openPopup="openInfoPopup"
         )

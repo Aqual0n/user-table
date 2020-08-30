@@ -16,8 +16,10 @@
                         v-on:click="$emit('fetchData')"
                     ) Загрузить
             +e.TABLE-COMPONENT.table(
-                :loading="loading"
                 :content="content"
+                :loading="loading"
+                :error="error"
+                :errorText="errorText"
                 @openPopup="$emit('openPopup', $event)"
             )
 </template>
@@ -35,6 +37,14 @@ export default {
         },
         loading: {
             type: Boolean,
+            required: false
+        },
+        error: {
+            type: Boolean,
+            required: false
+        },
+        errorText: {
+            type: String,
             required: false
         }
     },

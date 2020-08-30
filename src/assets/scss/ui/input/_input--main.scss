@@ -1,0 +1,32 @@
+.input {
+    &__value {
+        transition: border-color 0.3s ease;
+
+        &.error {
+            border-color: rgba($redDark, 0.3);
+        }
+    }
+
+    &.focus {
+        .input {
+            &__value {
+                border-color: rgba($black, 0.16);
+            }
+        }
+    }
+
+    @media (min-width: $desktop) {
+        &:hover {
+            .input {
+                &__value {
+                    border-color: rgba($black, 0.16);
+
+                    &.error {
+                        border-color: rgba($redDark, 0.3);
+                    }
+                }
+            }
+        }
+    }
+
+}

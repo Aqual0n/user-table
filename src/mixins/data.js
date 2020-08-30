@@ -2,6 +2,8 @@ import axios from 'axios'
 export default {
     data: () => ({
         loading: false,
+        error: false,
+        errorText: '',
         content: [],
         url: 'http://www.filltext.com/?rows=1000&id={index}&fullname={firstName}~{lastName}&company={business}&email={email}&uname={username}&address={addressObject}'
         // url: 'https://jsonplaceholder.typicode.com/users'
@@ -18,9 +20,11 @@ export default {
                     setTimeout(() => {
                         this.loading = false
                     }, 300)
-                }).catch(function (error) {
-                throw error
-            });
+                }).catch((error) => {
+                    this.loading = false
+                    this.error = true
+                    this.errorText = error.message
+                });
         }
     },
 }

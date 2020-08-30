@@ -1,4 +1,5 @@
 .table {
+    padding-top: toRem(24);
     border: 1px solid $grayBlueLight;
     border-radius: toRem(6);
     overflow: hidden;
@@ -22,24 +23,77 @@
     }
 
     th, td {
-        padding: 8px;
+        padding: toRem(8);
         text-align: left;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid $grayBlueMedium;
+    }
+
+    th {
+        font-weight: 700;
+        border-top: 1px solid $grayBlueMedium;
+        position: relative;
+
+        transition: .3s ease;
+        transition-property: background-color;
+
+        &::before {
+            content: '\e901';
+            font-family: $icon;
+            position: absolute;
+            right: toRem(8);
+            top: 50%;
+            transform: translateY(-50%);
+            color: $blueDark;
+            transition: .3s ease;
+
+            transition-property: color, transform, opacity;
+            opacity: 0;
+            font-size: toRem(12);
+        }
+
+        &:hover {
+            background-color: $grayBlueLight;
+            &::before {
+                opacity: 1;
+            }
+        }
+
+        &.sort {
+            &::before {
+                color: $redDark;
+                opacity: 1;
+            }
+
+            &--increase {
+                &::before {
+                    transform: translateY(-50%) rotate(180deg);
+                }
+            }
+        }
     }
 
     tr {
         cursor: pointer;
-
-        &:hover {
-            background-color:#f5f5f5;
+        transition: .3s ease;
+        transition-property: background-color;
+        &.hover {
+            &:hover {
+                background-color: $grayBlueLight;
+            }
         }
+    }
+
+    &__search {
+        width: 80%;
+        margin: 0 auto toRem(24);
     }
 
     &__pagination {
         margin-top: toRem(16);
     }
 
-    &__placeholder {
+    &__placeholder,
+    &__error {
         max-width: toRem(480);
         font-size: toRem(16);
         line-height: toRem(24);

@@ -15,13 +15,9 @@
                 +e.BUTTON.close(
                     v-on:click="closePopup"
                 )
-                +e.text.text
-                    p Имя: {{text.fullname}}
-                    p Адрес:
-                    p Штат: {{text.address.state}}
-                    p Улица: {{text.address.streetAddress}}
-                    p Город: {{text.address.city}}
-                    p Индекс: {{text.address.zip}}
+                +e.text.text(
+                    v-html="text"
+                )
 
 </template>
 
@@ -34,7 +30,7 @@ export default {
     ],
     props: {
         text: {
-            type: Object,
+            type: String,
             required: true
         }
     },

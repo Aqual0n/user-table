@@ -5,14 +5,24 @@ export default {
         popups: {
             info: {
                 active: false,
-                data: {}
+                data: ''
             }
         }
     }),
 
     methods: {
         openInfoPopup (data) {
-            this.popups.info.data = data;
+            if (data.address && data.fullname) {
+                this.popups.info.data = `
+                <p>Имя: ${data.fullname}</p>
+                <p>Адрес: </p>
+                <p>Штат: ${data.address.state}</p>
+                <p>Улица: ${data.address.streetAddress}</p>
+                <p>Город: ${data.address.city}</p>
+                <p>Индекс: ${data.address.zip}</p>`;
+            } else {
+                this.popups.info.data = '';
+            }
             this.popups.info.active = true
         },
         closePopup (name) {
