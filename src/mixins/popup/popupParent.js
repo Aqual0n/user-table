@@ -21,7 +21,7 @@ export default {
                 <p>Город: ${data.address.city}</p>
                 <p>Индекс: ${data.address.zip}</p>`;
             } else {
-                this.popups.info.data = '';
+                this.popups.info.data = `<pre>${JSON.stringify(data, null, 4)}</pre>`;
             }
             this.popups.info.active = true
         },
